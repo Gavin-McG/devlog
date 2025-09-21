@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>{{ page.title }} | {{ site.title }}</title>
+
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/styles.css" />
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/post.css" />
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/code.css" />
+
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/prism.css"/>
+  <script src="{{ site.baseurl }}/assets/prism.js"></script>
+
+  <script src="{{ site.baseurl }}/assets/code.js" defer></script>
+  <script src="{{ site.baseurl }}/assets/post.js" defer></script>
+</head>
+<body>
+  <div class="content">
+    <header class="header">
+      <a href="{{ site.baseurl }}/">
+        <img class="header-logo" src="{{ site.baseurl }}/assets/logo.png"/>
+      </a>
+      <h2 class="header-text">{{ page.title }}</h2>
+    </header>
+
+    {{ content }}
+
+    <div class="task-total"></div>
+  </div>
+</body>
+</html>

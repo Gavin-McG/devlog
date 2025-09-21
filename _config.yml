@@ -1,0 +1,8 @@
+title: My Devlog
+baseurl: "/devlog"   # important for GitHub Pages
+url: "https://username.github.io"
+
+markdown: kramdown
+theme: minima
+
+permalink: /:title/   # ensures /post-name/index.html
