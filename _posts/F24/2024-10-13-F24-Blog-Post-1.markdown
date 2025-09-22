@@ -48,6 +48,7 @@ ordering system. Either all ground sprites would overlap all water sprites or vi
 order. As it turns out, this was a result of the two sprites I used being from seperate textures. Once the two
 sprites were combined into a single texture then sliced into seperate sprites the ordering issues resolved
 themselves.
+
 <img src="{{site.baseurl}}/assets/F24/post-1/Images/HexMapScripted.png" />
 Completed Basic Scene using a Unity tilemap.
 {: .caption }
@@ -63,11 +64,13 @@ briefly skimmed the Unity documentation and found TileMap.SetTile() would be the
 I immediatly ran into issues creating the script, as my IDE refused to recognise the TileMap object. After a
 brief search I found it was because I needed to manually include the UnityEngine.TileMap library. Once that was
 done it was as simple as creating a simple for loop.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-1/Scripts/HexGrid.cs"></div>
 
 The x coordinate was exactly as I would have expected, being straight across. The y coordinate was more
 interesting, zagging from side to side along the axis. If we do go along with the idea of a hex grid in our
 final project I will need to be sure to keep aware of this when adding new features.
+
 <img src="{{site.baseurl}}/assets/F24/post-1/Images/HexMapScripted.png" />
 Altered tilemap resulting from script
 {: .caption }
@@ -102,6 +105,7 @@ there will be water in the game. For that reason I wanted to get a head start in
 could be used in our game. Aside from just looking like water, a proper water shader would need to be able to
 change over time. Before jumping right into HLSL code, I begin "drafting" the shader using Blender's shader
 editor. I ended up with a result very close to what I was imagining.
+
 <img src="{{site.baseurl}}/assets/F24/post-1/Images/BlenderWater.png" />
 Draft of shader in Blender
 {: .caption }
@@ -158,6 +162,7 @@ Instead of using this system, I wanted to create a conversion between this and a
 coordinate system called cubic coordinates. This coordinate system introdcues a new Z coordinate, which may seem
 odd for a 2-dimentional coordinate system, but using it makes the tiles much more consistent in terms of a
 tile's difference from its neighbor, which will be vitally important for a building system going forward.
+
 <img src="{{site.baseurl}}/assets/F24/post-1/Images/cube-diagram.png" />
 Example of cubic coordinates on a 2D hexmap
 {: .caption }
@@ -171,6 +176,7 @@ The only issue I ran into when completing this task was that the functions I fou
 negative numbers. Supposedly integer division in C# rounds differently than whatever pltform being used by the
 creator of the article. Once this slight issue was resolved I created a quick script to confirm the HexUtils
 functions were working as intended be placing lines of tiles in all 3 directions.
+
 <img src="{{site.baseurl}}/assets/F24/post-1/Images/HexCoordinates.png" />
 succesful result of placing tiles along each coordinate dimention
 {: .caption }
@@ -200,12 +206,14 @@ create a ScriptableObject That would group tiles with their respective labels, a
 these objects to access tiles. I found this option to be very bloated, requiring two objects in the project
 files for each tile and complicating the code. Instead, I created a customTile class which extends from Tile
 this stores this label value. I changed all the existing tiles to this CustomTile object.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-1/Scripts/CustomTile.cs"></div>
 
 Next, I created a Structure object. The structure object stores either one or a set of tiles to describe the
 tiles that make up a building. Each structure also has a label for type of building. Each tile within the
 Structure was contained in a StructurePiece struct which would also store the relative coordinate to the
 building's center.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-1/Scripts/Structure.cs"></div>
 
 The bulk of the actual building process is controlled by a script I named BuildingManager. This script contains
@@ -220,6 +228,7 @@ Conner Spears had previously created a system for highlighting the tile the mous
 functionality of that script into the BuildingManager script as part of the building system. I also improved it
 so that an entire building was highlighted when hovered over as opposed to one tile. The final feature I added
 were Unity events to make it simpler for UI and control scripts to interact seamlessly with the building system.
+
 <img src="{{site.baseurl}}/assets/F24/post-1/Images/BuildingSystem.png" />
 Image of the building system, with a multi-tile building being previewed in green
 {: .caption }
@@ -234,6 +243,7 @@ the functions and purposes of the BuildingManager, Structure, Building, and Cust
 background information and recommended practice when interacting with coordinate systems and creating new
 buildings and tiles. I used chatgpt to aid in describing the parameters and return values of each of the
 functions.
+
 <img src="{{site.baseurl}}/assets/F24/post-1/Images/ProgrammingDocumentation.png" />
 Image of the Building Manager script in the documentation
 {: .caption }

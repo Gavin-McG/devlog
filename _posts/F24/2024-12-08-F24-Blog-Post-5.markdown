@@ -28,11 +28,13 @@ of perlin noise doesn't have as much detail, I could make it look more like clou
 leyers. To apply this cloud shader I approached it in much the same way as I had the water shader. I created a
 large plane, moved it in front of the tilegrid rather than behind, and applied a material with the cloud shader
 to it.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-5/Scripts/Clouds.shader"></div>
 
 As it turns out, having the clouds applied as a mesh in the scene didn't work on account the the transparency of
 the clouds. It didn't work at all with the sprite ordering of the tiles in the tilemap, and as far as I could
 tell, there was no way to explictly change the rendering order of the cloud's plane mesh.
+
 <img src="{{site.baseurl}}/assets/F24/post-5/Images/GlitchedClouds.png" />
 Screenshot of broken cloud layering.
 {: .caption }
@@ -41,6 +43,7 @@ My next approach was to apply the clouds as a post-process. While I prehaps shou
 approach from the start, I was lazy wanted to avoid doing the extra math involving camera size and camera
 position for the uv coordinates. I created a script which would both apply the post process to the render output
 of the camera and send the camera's information to the shader.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-5/Scripts/Clouds.cs"></div>
 This solution both fixed the sprite ordering issues and had a result I was very satisfied with.
 <img src="{{site.baseurl}}/assets/F24/post-5/Images/FixedClouds.png" />
@@ -78,6 +81,7 @@ After some research I found that the AudioSource component has a playOneShot() f
 play different sound effects whenever you want, even if they overlap with one another. I created a AudioManager
 script which would hold all the different audio clips and they them in response to certain game events. Manay of
 the events for these effects already were added, but others I had to create new events for.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-5/Scripts/AudioManager.cs"></div>
 
 As for what audio effects I used for this, I added a combinations of effects that I produced quickly using the
@@ -85,6 +89,7 @@ online <a href="https://sfxr.me/">JSFXR</a> tool and a couple sound effects I co
 <a href="https://freesound.org/">FreeSound</a>. None of the sounds used from these sources are ideal for a final
 product, but for a prototype it's nice to have sound in the game prior to the showcase. There also isn't any
 music presently, which is another aspect that would be necessary for the final product.
+
 <img src="{{site.baseurl}}/assets/F24/post-5/Images/AudioClips.png" />
 Picture of all Audio Clips currently in the game.
 {: .caption }
@@ -102,6 +107,7 @@ music, I decided to volunteer to complete it.
 For the programming design document one thing we were supposed to provide was an outline of the programming
 structure. I used Canva to produce a basic flowchart which included all of the most major components of the
 game's function that I could recall and the major relationships between said scripts.
+
 <img src="{{site.baseurl}}/assets/F24/post-5/Images/ProgrammingFlowchart.png" />
 Flowchart of the game's programming structure
 {: .caption }
@@ -110,6 +116,7 @@ I also provided a 2-3 sentence description of each of the mentioned components a
 more detail about the Buidling, Structure, and Tile information. The last peice of information I chose to
 include was information about the coordiante system. I had already created programming documentation for the
 coordinate systems, so I made a 2-3 paragraph summary ofthat page.
+
 <img src="{{site.baseurl}}/assets/F24/post-5/Images/ProgrammingDoc.png" />
 Portion of the completed programming Design Document.
 {: .caption }
@@ -127,6 +134,7 @@ make the world feel more alive, and sound effects for dungeon battles.
 There was also a brief section to describe the implementation of audio effects, briefly describing the current
 system, and that elaborating on this system and implementation of audio would primarily fall onto the
 programmer's responsibility.
+
 <img src="{{site.baseurl}}/assets/F24/post-5/Images/AudioDoc.png" />
 Portion of the completed Audio Design Document.
 {: .caption }

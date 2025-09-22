@@ -21,6 +21,7 @@ We decided on what we wanted to accomplish for the following week. As of this po
 a hard-coded reward and could grant as many fossils the player won battles. I wanted to create a system to
 customize the rewards and provide multiple levels for each dungeon. Connor would do more work in UI tweaks and
 additions. Nadav would continue working on the dungeon art and finishing the environment tiles.
+
 <img src="{{site.baseurl}}/assets/F24/post-4/Images/DungeonWIP.png" />
 WIP image of the dungeon.
 {: .caption }
@@ -34,6 +35,7 @@ created the Dungeon Levels UI. This UI, for now, can display up to 4 different l
 a player interacts with the dungeon it open this UI instead of opening the fighting UI for the dungeon. Each
 entry in the dungeon UI displays the range of gold it can reward, the number of fossils the player has/can get,
 and the difficulty rating of the level.
+
 <img src="{{site.baseurl}}/assets/F24/post-4/Images/DungeonLevelsUI.png" />
 Image of the new Levels UI.
 {: .caption }
@@ -44,6 +46,7 @@ another dungeon, it just wouldn't display any details of the fight and display t
 this was pretty bad solution as it didn't communicate very well to the player what they were seeing. With the
 new system I can instead just prevent them from entering the fighting UI from the level UI when they're
 interracting with a different dungeon.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-4/Scripts/DungeonLevelsUI.cs"></div>
 
 
@@ -72,6 +75,7 @@ single tile had its own sprite to display. To get around this I created a "blank
 sprite to fill the tiles that no longer needed a sprite. Figuring out exactly which tile coordiantes each blank
 tile needed to be also took some trial and error, as the I have still yet to memorize the directions of the
 cubic coordiante system of the hex grid.
+
 <img src="{{site.baseurl}}/assets/F24/post-4/Images/ArtImplementation.png" />
 All the current buildings and environment tiles in the Unity scene.
 {: .caption }
@@ -87,6 +91,7 @@ group presented after them. Of course, we just talked about what we had complete
 all of what I mentioned in the section for Weekly meeting #6. Connor Chen gave an update on Project Sandcastle
 which was nearing its deadline. They had much more features which seemed "complete" than before, such as the
 walls having a more finished look.
+
 <img src="{{site.baseurl}}/assets/F24/post-4/Images/SlideShow.png" />
 Example screenshot from out slideshow presentation.
 {: .caption }
@@ -108,6 +113,7 @@ current battle whilst enabling them to perform other tasks of the game.
 Most of the designing of the UI could be created by coppying elements from other UI. In particular, I copied the
 Tavern UI, as it already had the horozontal lines I was looking for. In adapting It I removed things such as the
 back panel, the extra features, text, and any other information that didn't seem vital for this screen.
+
 <img src="{{site.baseurl}}/assets/F24/post-4/Images/MiniDungeonUI.png" />
 Example image of the Mini Dungeon UI during battle.
 {: .caption }
@@ -118,6 +124,7 @@ display was copied from the same Tavern UI that its design was adapted from. Ano
 Implementation was turning it off and on based on whether the Dungeon UI was open. For this I only had to add a
 reference to the Mini UI in the dungeon UI and use the SetActive function in the OnEnable and OnDisbale
 functions respectively.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-4/Scripts/DungeonMiniUI.cs"></div>
 
 
@@ -128,6 +135,7 @@ As of now, when a dungeon battle is won or lost the only indicator of such is wh
 leave the dungeon and return to the tavern, which the player might not always be looking for. I wanted to add an
 indicator screen that pops up once a battle in completed which explicitly informs the player of the outcome. I
 created two similar UI, one for a win and one for a loss.
+
 <img src="{{site.baseurl}}/assets/F24/post-4/Images/DungeonWinUI.png" />
 Popup UI after dungeon victory.
 {: .caption }
@@ -135,6 +143,7 @@ Popup UI after dungeon victory.
 Implementation for this UI was fairly simple. Only two text components of the UI, the gold and the fossil
 amount, need any updates. It also doesn't have any information that might change, so it doesn't have any update
 function.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-4/Scripts/DungeonWinUI.cs"></div>
 
 
@@ -146,4 +155,5 @@ they are doing other things. This means they might have another UI open when the
 we don't want to have multiple UI's overlapping each other. For this I created a UI queue system which can display 
 popups only when all other UI elements are closed. The dungeon rewards popup are the only feature which currently 
 use this, but it is good to have for later features that might be added.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-4/Scripts/UIQueueManager.cs"></div>

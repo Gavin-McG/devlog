@@ -7,38 +7,34 @@ permalink: /F24/post-3/
 
 Weekly Meeting #4
 {: .task time="2h"}
-<p>
 Nadav couldn't be present for this meeting, which worked out as there wasn't very much we needed to do in
 particular for this week's meet. After the basic weekly announcements and catching up with the main project
 Sandcastle group, Connor and I found a spot to work on the project. We spent some time going over each of our
 contributions to the project and programming decisions and implementations for out respective features so we
 were both up-to-date with the code.
-</p>
 
 
 
 Party Manager
 {: .task time="3h"}
-<p>
 One of the core components of the Quest system will be the Party Manager. This script manages the adventurers
 that the players have hired and contains the logic for sending them on quests, hiring new adventurers, and
 create new randomly generated adventurers. While most of the functions of this script will be dictated through
 UI that will be created later, the underlying logic can be designed now.
-</p>
-<p>
+
 First I created an Adventurer script which contains the adventurer class and several enumerators to represent
 different forms of information about the adventurer. The adventurerInfo is a scriptableObject which groups the
 face asset for the UI, the body asset for when the adventurer is travelling through the world, and the class of
 the adventurer so the art of each adventurer can be designed around a specific class.
-</p>
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-3/Scripts/Adventurer.cs"></div>
-<p>
+
 The PartyManager manages an array of 4 adventurers. It provides public scripts for the Tavern to hire new
 adventurers and provides methods to dispatch the party to a dungeon of a specific name. It also stores many
 values I'd like to share between different UI pages such as the the colors. Something I'd like to note is that
 the version of the PartyManager script below is not how it was first written, but has been altered throughout
 the process of the UI design which I will describe later.
-</p>
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-3/Scripts/PartyManager.cs"></div>
 
 
@@ -50,6 +46,7 @@ each advneturer, and commanding the party of adventurers where to go. First, I w
 Making this UI look clean and fit all the information I wanted took a lot of trial nd error. I also made several
 components of the UI have their own scripts and prefabs to make programming and getting UI element references
 much simpler later on.
+
 <img src="{{site.baseurl}}/assets/F24/post-3/Images/TavernUI.png" />
 Example Image of Tavern UI (post-implementation)
 {: .caption }
@@ -59,6 +56,7 @@ components and scripts that were used for the Tavern UI could be copied and adap
 quickly. This UI recieved 4 randomly generated adventurers from the PartyManager on game startup and after a new
 adventurer is hired. That way the player cannot just refresh the page over and over again to get the perfect
 result, and has to make strategic compromises more often.
+
 <img src="{{site.baseurl}}/assets/F24/post-3/Images/HiringUI.png" />
 Example Image of Hiring UI (post-implementation)
 {: .caption }
@@ -84,6 +82,7 @@ Tavern UI, I couldn't just copy the UI compoennts for this, as the UI format wou
 in order to allocate enough space to the health bar and battle information whilst letting the text be large and
 legible. I changed the stats to be vertical and removed the text for each one, as this specific information was
 less relevant for the Dungeon UI.
+
 <img src="{{site.baseurl}}/assets/F24/post-3/Images/DungeonUI.png" />
 Example Image of Dungeon UI (post-implementation)
 {: .caption }
@@ -97,6 +96,7 @@ For now, I created a method in the PartyManager script to caluclate a "party sco
 multiplies the party members' stats in such a way that encourages party balance in both class and stats.
 Fighting a dungeon consists of repeated skill checks, comparing the party score to a dungeons difficulty, being
 more likely of success when the party score is higher. For the exact probability I used a normal distribution.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-3/Scripts/PartyCheck.cs"></div>
 
 For now, the text output from the battles just uses placeholder messages. Getting unique and interesting
@@ -104,6 +104,7 @@ messages in here like, "{name} was struck by Goblin for 9 damage", would be idea
 the time restraints of this project. The specfic rewards a dungneon grants should also be customizable later on,
 but for now it just gives 200-400 gold at random and 1 fossil. This is still significant, though, as it
 represents the first way to get fossils, the main form of progression through the game.
+
 <img src="{{site.baseurl}}/assets/F24/post-3/Images/BattleImage.png" />
 The player mid-battle, showing 1 adventurer dead and a progress bar
 {: .caption }
@@ -112,6 +113,7 @@ Most of these methods and functionality were placed into the PartManager script.
 large at this point, being almost 600 lines long. At some point I might split the functionality into 2 scripts,
 being the PartyManager and potentially a BattleManager. For now I'd rather focus on bug fixes and finishing all
 the features we want to have by the end of semester.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-3/Scripts/PartyManager(1).cs"></div>
 
 
@@ -122,6 +124,7 @@ We met the day before the next weekly meeting to create the slideshow we would b
 our own sections respectively for what we had accomplished since the last presentation 2 weeks ago and another
 for what we hoped to accomplish with te project before the project deadline. Between these two sections of the
 presentation we included a live demo of the current project.
+
 <img src="{{site.baseurl}}/assets/F24/post-3/Images/Slideshow.png" />
 Screenshot of the Slideshow
 {: .caption }
@@ -144,6 +147,7 @@ We also got the opportunity to playtest the game in its current state with sever
 interesting seeing people first impression on the game and seeing what came intuitively and what didn't. It also
 revealed several small bugs, which should fortunetly be fairly easy to fix. I made sure to take notes on things
 I noticed about their experinced and comments they made regarding their own experience.
+
 <img src="{{site.baseurl}}/assets/F24/post-3/Images/PlayTestNotes.png" />
 Notes taken during the brief playtesting session.
 {: .caption }
@@ -162,6 +166,7 @@ required some changing the code, but was overall an easy issue, only requiring a
 adventurers on button click. I did take the opportunity to clean up the code a bit, grouping several repeated
 checks into their own functions such as AdventurerCount, CanHire, CanDispatch, CanFight, and CanReturn. These
 functions made the code much more compact and readable.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-3/Scripts/PartyManager(2).cs"></div>
 
 
@@ -178,6 +183,7 @@ The rangeManager sets tiles in a new Tilemap to visualize this range to the play
 editing modes. This also works perfectly for building, because all that's needed to check whether a building
 placement is valid is to look for a tile in the rangeMap in O(1) time. To enable or disbale this visualization
 you just set the enabled state of the tilemap.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-3/Scripts/RangeManager.cs"></div>
 <img src="{{site.baseurl}}/assets/F24/post-3/Images/TownRange.png" />
 The range of the town shown as a blue highlight around the buildings.
@@ -203,6 +209,7 @@ hence the short duration of the meeting, but we figured it was better to keep a 
 meeting per week. I showed the progress I'd made this week and described that I'd hope to finish it to before
 the next team meeting. Connor made it so that you can destory trees within the town range to collect wood. Nadav
 finished up some of the environment tiles so we can begin art implementation soon.
+
 <img src="{{site.baseurl}}/assets/F24/post-3/Images/TileArt.png" />
 One of the finished tiles to be used in the game.
 {: .caption }
@@ -219,4 +226,5 @@ range. At the beginning of the algorithm only the main tower is known to be in r
 checking for any nearby towers the loop ends. If any towers were not seen by any of the connected towers then
 they are destroyed. This algorithm corrctly ensures that all wizard towers are either directly or indirectly
 connected to the main tower.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-3/Scripts/WizardTowerAlgorithm.cs"></div>

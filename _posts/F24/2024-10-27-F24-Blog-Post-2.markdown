@@ -7,25 +7,21 @@ permalink: /F24/post-2/
 
 R&D Meeting 10/13/24
 {: .task time="1.5h"}
-<p>
 Due to fall break we didn't have any studio meeting this week. Instead our group decided to have our own
 meeting. The first 30 minutes or so of the meeting we just had Connor and myself present. We used the
 opportunity to catch him up on how the building system I had made worked and tell him what each script was for.
 He also showed me some of the UI which he had made, which included a dropdown for editing mode and an option to
 select which structure to place.
-</p>
-<p>
+
 Once Nadav arrived we moved on to talking about non-programming topics. We decided we would meet again later
 this week to work on the slideshow we would present at the next studio meeting. The R&D groups were to make
 these presentations to show out progress and direction going further. We also talked about a timeline for art
 assets and what the requirments would be to be able to properly impliment them in the current system.
-</p>
-<p>
+
 Finally, we established what our tasks would be for this week, aside from creating the slideshow. Nadav would
 begin working on art for the game. We decided the first priority for art should be to create one image for each
 building type. I would be working on implimenting environmental features such as trees or rocks. I would also be
 starting on creating a simple economy/resource system. Connor will be working more on UI.
-</p>
 
 
 
@@ -44,6 +40,7 @@ Instead, I had to create a custom sprite shader that would treat the alpha chann
 when the "None" editing mode was selected using shader keywords. I started off by finding Unity's default sprite
 shader code online and built off of that. I ran into some issues getting the sprite alpha to work seperatly from
 the color alpha, but managed to get it working with some trial and error.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-2/Scripts/UnitySpritesCustom.cginc"></div>
 <img src="{{site.baseurl}}/assets/F24/post-2/Images/SelectionHighlight.png" />
 Image showing the new white highlighting using the custom sprite shader.
@@ -58,6 +55,7 @@ I finished up my changes by grouping several sections of repeated code into meth
 ClearPreview. I moved the content of the update function into its own method. Finally, I added two new events to
 represent when the placing of a building or deletion of a building fails, likely to be used for audio effects
 later on.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-2/Scripts/BuildingManager.cs"></div>
 
 
@@ -83,6 +81,7 @@ approach this value using an exponential decay function, making the process of z
 smoother. Finally, I made it so that the zooming process was centered on the location of the mouse pointer. The
 exact math to get this to work by changing the position of the camera during zooming took some tinkering but
 didn't end up being too difficult.
+
 <img src="{{site.baseurl}}/assets/F24/post-2/Images/CameraZoom.png" />
 Image of the camera zoomed out and moved from the center.
 {: .caption }
@@ -102,6 +101,7 @@ and resource exchanges within the operators of this class would make it much eas
 quickly later on. There were several operators I also defined such as the <, >, <=, and >= operators which would
 effectively compare whether a given value could afford a given cost. There were some opertations that likely
 wouldn't need to be used, but I implimented them anyways for the sake of functional completeness.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-2/Scripts/Resources.cs"></div>
 
 Next I created a ReasourceManager script to be attached to the GameManager. This script would store the user's
@@ -111,6 +111,7 @@ GetBuilding function, I made the buildings be components attached to prefabs. Th
 store a reference to the Building's prefab and be instantiated that way. Once this change was made I had each
 building have a building cost, which would be checked against the user's resources whenever a building was
 placed.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-2/Scripts/ResourceManager.cs"></div>
 
 To finish off the resource system for now, I created a simple UI which displays the user's current Magic, Stone,
@@ -119,6 +120,7 @@ sprite from a previous project of mine. I craeted a simple script which would se
 to the user's current amount of its respective resource from the ResourceManager. As of now, it is set to update
 every frame. I might change this later to wait for an event associated with a change in resources, but for now
 this is acceptable.
+
 <img src="{{site.baseurl}}/assets/F24/post-2/Images/ResourceUI.png" />
 Simple resource UI showing current resource values.
 {: .caption }
@@ -132,6 +134,7 @@ expected to create a presentation. This presentation would include progress we'v
 the game is, and what we hope to complete within the scope of this semester. We worked on a slideshow that we
 would present during that meeting. We divided into three sections: design concepts/ideas, art progress and
 inspirations, and progamming progress and challenges.
+
 <img src="{{site.baseurl}}/assets/F24/post-2/Images/PresentationImage.png" />
 Example slide from out presentation
 {: .caption }
@@ -151,6 +154,7 @@ to the user's resources when a building is succesfully destroyed. Finally, I wan
 indicate when a building couldn't be afforded. To accomplish this the building preview checks whether the
 selcted building can be aforded and changes the highlight color accordingly. For now this color is set to
 orange.
+
 <img src="{{site.baseurl}}/assets/F24/post-2/Images/OrangeHighlight.png" />
 Building Highlghted orange when it is too expensive
 {: .caption }
@@ -184,6 +188,7 @@ as either the top point or the bottom point of a respective hexagon. I wanted th
 along the edge or through a neighboring hexagon to a different point, whichever would produce a quicker route.
 Then I create a image to visualize the possible paths both to make it easier for me to visualize and for use in
 later documentation.
+
 <img src="{{site.baseurl}}/assets/F24/post-2/Images/PathfindingOptions.png" />
 Visualization of all possible paths for characters to take.
 {: .caption }
@@ -192,7 +197,8 @@ Next I created a class which I named HexPoint. This would store both the coordin
 for whether the point was the hexagon's top or bottom, and all other necessary functions and operators the class
 would need. Going off of a standard A* algorithm, which is what I'd be using, I needed it to work with a hash
 map so I overrode GetHashCode. I also needed a way to calculate effective distances between points, which I
-defined a static function for
+defined a static function for.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-2/Scripts/HexPoint.cs"></div>
 
 Then came the bulk of the task, actually implimenting the A* algorithm. I started with a standard implimentation
@@ -208,12 +214,14 @@ Next I had to define the conditions for each path. A given node would only check
 on whether it was a top/bottom vertex. For an edge between hexagons it would check that atleast one hexagon had
 solid ground and that both hexagons wern't part of the same building. For paths through a hexagon it'd check
 that there wasn't either a building or environment tile there and that the ground was solid.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-2/Scripts/HexAStar.cs"></div>
 
 Once that was finished I threw together another script to test that everything was working properly and generate
 a path between two points of my choosing. I instantiated points along the path just to verify that the path that
 was being chosen was what seemed to be the most optimal path. I ran several test, including testing the effect
 of placing new buildings in the way, paths through trees, and paths around water.
+
 <img src="{{site.baseurl}}/assets/F24/post-2/Images/PathfindingTest.png" />
 Visualization of path generated between two points.
 {: .caption }
@@ -223,6 +231,7 @@ two bugs I identified. One == that needed to be a != which had allowed the path 
 fix to the CompareTo function which was actually broken in the original implimentation which caused some valid
 paths to be skipped. In debugging these issues I used Unity's drawline functions to visualize the edges the
 pathfinding algorithm was searching. Once these issues were resolved everything was fnctioning as intended.
+
 <img src="{{site.baseurl}}/assets/F24/post-2/Images/PathfindingDebugging.png" />
 Screenshot taken mid-debugging process showing Visualization of edges.
 {: .caption }
@@ -258,6 +267,7 @@ have noticed it is long. VERY long. almost 700 lines, in fact. This being larger
 split its functionality into 2 scripts, moving all functions and methods related to previewing buildings or
 highlighting buildings into the PreviewManager.cs script. BuildingManager remains a long script, but it's much
 more manageable now.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-2/Scripts/BuildingManager(2).cs"></div>
 <div class="code" href="{{site.baseurl}}/assets/F24/post-2/Scripts/PreviewManager.cs"></div>
 
@@ -281,6 +291,7 @@ first whilst it was fresh in my mind. I created some placeholder assets to be us
 created a script that would recieve a set of coordinate points from a PartyManager script that will be
 implimented later. This script will move the adventerer from point to point at a constant rate before removing
 the adventerer once it reaches its destination and inidcating as such back to the PartyManager.
+
 <div class="code" href="{{site.baseurl}}/assets/F24/post-2/Scripts/WalkingAdventurer.cs"></div>
 
 
@@ -292,6 +303,7 @@ already. This included the Camera control, the many changes made to the Building
 Manager, and the scripts related to the pathfinding system. While I have made some progress in the Questing
 system, I am not adding them to the documentation at this time as these features are still in my working branch
 and very suseptible to change.
+
 <img src="{{site.baseurl}}/assets/F24/post-2/Images/Documentation.png">
 Example Image of main Pathfining page with links to other pages.
 {: .caption }
