@@ -1,0 +1,200 @@
+---
+---
+
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    color: white;
+    background-color: #333333;
+    background-image: url("{{ site.baseurl }}/assets/images/background.jpg");
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.content {
+    width: 80%;
+    margin: 0 auto 0 auto;
+    padding: 10px;
+    background-color: #111A;
+}
+
+.main-info-container {
+    margin-top: 20px;
+    padding-top: 10px;
+    width: 100%;
+    height: 30vw;
+}
+
+.main-info {
+    background-image: url(../Images/Unity_Logo.png);
+    background-blend-mode: multiply;
+    background-size: 100%;
+    aspect-ratio: 1;
+    height: 100%;
+    margin: 0 auto 0 auto;
+}
+
+.main-info * {
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.title {
+    text-decoration: none;
+    font-size: 5vw;
+    font-weight: bold;
+    padding-top: 33%;
+}
+
+.author {
+    font-size: 2vw;
+}
+
+.log-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+}
+
+.log-image {
+    width: 6vw;
+    height: auto;
+}
+
+.log-title {
+    font-size: 3vw;
+    width: 100%;
+    height: min-content;
+    border-bottom: solid white 3px;
+    padding: 0;
+    margin: 1vw 0 0 0;
+}
+
+.log-description {
+    width: 80%;
+    margin: 2vw auto 2vw auto;
+    font-size: calc(max(1em,1.4vw));
+}
+
+.devlog-container {
+    margin: 0 2% 0 2%;
+}
+
+.post-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 20px;
+    margin-bottom: 20px;
+}
+
+.post {
+    width: 400px;
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    margin: 10px;
+    padding: 4px;
+    background-color: #222;
+    border: solid 2px #888;
+    border-radius: 20px;
+}
+
+.post-info {
+    width: 100%;
+    border-radius: 17px;
+    background-color: #444;
+}
+
+.post-image {
+    width: 100%;
+    height: auto;
+    border-radius: 17px 17px 0 0;
+}
+
+.post-date {
+    color: white;
+    font-size: 30px;
+    margin: 10px 20px 10px 20px;
+}
+
+.post-description {
+    font-size: 25px;
+    color: white;
+    margin: 10px;
+}
+
+.post-link {
+    text-decoration: none;
+    text-align: left;
+}
+
+.post-link:hover {
+    border-width: 5px;
+}
+
+@media (max-width: 800px) {
+    .content {
+        width: 90%;
+    }
+
+    .main-info-container {
+        width: 100%;
+        height: 70vw;
+    }
+
+    .title {
+        font-size: 10vw;
+    }
+    
+    .author {
+        font-size: 6vw;
+    }
+
+    .log-image {
+        width: 12vw;
+        height: auto;
+    }
+    
+    .log-title {
+        font-size: 5vw;
+        width: 100%;
+        margin: 2.5vw 0 0 0;
+        border-bottom: solid white 3px;
+    }
+
+    .log-description {
+        width: auto;
+        font-size: 4vw;
+    }
+
+    .post-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .post {
+        width: auto;
+        margin: 1vw;
+        padding: 0.5vw;
+    }
+    
+    .post-date {
+        font-size: 3.5vw;
+        margin: 1vw 2vw 1vw 2vw;
+    }
+    
+    .post-description {
+        font-size: 2.5vw;
+        margin: 2vw;
+    }
+    
+}

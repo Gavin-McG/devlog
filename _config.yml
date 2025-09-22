@@ -1,6 +1,7 @@
 title: My Devlog
 baseurl: "/devlog"   # important for GitHub Pages
 url: "https://username.github.io"
+encoding: utf-8
 
 markdown: kramdown
 theme: minima

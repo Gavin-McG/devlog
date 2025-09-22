@@ -13,7 +13,7 @@ function renderCode(element, content, filePath) {
   element.innerHTML = `
     <div class="code-container">
       <p class="code-file"><a href="${filePath}">Download ${fileName}</a></p>
-      <pre><code class="language-${element.getAttribute("lang") || "cs"}">${Prism.highlight(content, Prism.languages[element.getAttribute("lang") || "csharp"], element.getAttribute("lang") || "csharp")}</code></pre>
+      <pre class="language-${element.getAttribute("lang") || "cs"}"><code class="language-${element.getAttribute("lang") || "cs"}">${Prism.highlight(content, Prism.languages[element.getAttribute("lang") || "csharp"], element.getAttribute("lang") || "csharp")}</code></pre>
     </div>
   `;
 }
