@@ -1,7 +1,7 @@
 ---
 layout: default
 title: F25 Blog Post 1
-date: 2025-10-05
+date: 2025-10-03
 permalink: /F25/post-1/
 ---
 
@@ -48,7 +48,7 @@ Dithering
 {: .task time="3h"}
 For an isometric view its important that the player can see themselves when behind a wall. I decided to work on a dithering effect for then the player is behind a wall so that I could work on this and the custom materials for the 2D look at the same time. For the dithering effect itself I used a function called InterleavedGradientNoise within Unity's shader library as well as the HLSL clip() method rather than just transparency so that the dithering effect would apply to opaque objects as well.
 
-<div class="code" href="{{site.baseurl}}/assets/F25/post-1/Scripts/Dithering.hlsl"></div>
+<div class="code" href="{{site.baseurl}}/assets/F25/post-1/Scripts/DitherClip.hlsl"></div>
 
 For the rest of the material I used ShaderGraph, applying this function using a custom function node. The material uses a simple Tri-planar mapping so that materials can be easily tiled across rectangles without any need for any UV mapping or 3D modelling. 
 

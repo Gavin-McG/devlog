@@ -17,7 +17,7 @@ were certain aspects which hadn’t been completely established during our R&D p
 Kickoff Meeting
 {: .task time="2h"}
 The kickoff meeting mostly consisted of ice-breakers and introductions to the projects. Most of the studio
-members who were returning already knew of the generaal idea of the project from our presentations and showcases
+members who were returning already knew of the general idea of the project from our presentations and showcases
 from the previous semester. Those that were new were given a basic description of the project, knowing they’d
 become more accustomed as the project as the semester goes on.
 
@@ -37,7 +37,7 @@ me by Connor Chen. I believe that same package was used in the previous Studio p
 <a href="https://github.com/yasirkula/UnityIngameDebugConsole">See Github Page</a>
 {: .caption }
 
-Once the package was added to the project it was fairly simple to add individual features and commands. I bagan
+Once the package was added to the project it was fairly simple to add individual features and commands. I began
 with a way to easily add any amount of individual or all resources. For the dungeon system I added a way to
 automatically hire either a team of a random party or a preset team with max stats. I also added a way to
 automatically win or lose a fight, which did take some adjusting to the fighting code to work correctly.
