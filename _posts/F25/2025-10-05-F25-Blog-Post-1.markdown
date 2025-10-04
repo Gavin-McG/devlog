@@ -1,0 +1,71 @@
+---
+layout: default
+title: F25 Blog Post 1
+date: 2025-10-05
+permalink: /F25/post-1/
+---
+
+Meeting #1
+{: .task time="2h"}
+Much of the first meeting consisted of introductions, icebreakers, and necessary onboarding to those who were new to the studio. Once that was complete I met with my R&D team that I would be on for this semester. There is 4 of us in total, with 2 programmers, 1 designer, and 1 artist. Beyond that there wasn't much other work that needed to be completed for this first meeting. What we decided is that for this week everyone should come up with at least 1 game idea/theme/genre that they would prefer so that we could come to a decision in the following meeting.
+
+
+
+Creating Game Ideas
+{: .task time="1h"}
+I ended up coming two two different ideas for games to work on. The first was a sci-fi themed game placed on a space colony in which a kidnapped journalist must find a way to return to earth to unearth a conspiracy. The other was a game where you play as a bodyguard and need to protect your client from various dangers and assassination attempt by learning optimal routes to collect all necessary tools and disarm all dangers. Both ideas were concepts that I think could be made to work within the scope of a Wolverinesoft studio project and would involve systems that I would enjoy working on.
+
+
+
+Meeting #2
+{: .task time="2h"}
+With everyone having come up with their own ideas the primary goal of this meeting was to come to a conclusion on what game we wanted to create. After some discussion the group wa torn between the Bodyguard game idea I'd proposed and a more rhythm themed game. Eventually I proposed a compromise in which we adapt my original bodyguard concept to use rhythm game/quick-time event mini-games for certain interaction or challenged. This ended up being an idea that everyone was on board with. 
+
+We decided that the overall structure of the game would feature you being hired to guard a client. Each level would be a different day in a different setting with scattered and varied threats requiring disarming. We also threw together potential story details, such as the company themselves being the ones who want your client dead, only assigning you because you were a rookie and assumed you'd fail. This idea would play on the sort of ground-hog style of video games where you get to restart the day after failing with new knowledge of what will happen. There could even be levels that require failing in order for certain dialogue options or interactions to become available.
+
+We decided what tasks we would each work on for the following week. I would begin working on a basic player controller. Ethan, the other programmer, would begin working on a general structure for the rhythm -. Vida, the artist, would begin compiling art style inspirations and work on some basic sketches. Lily, the designer, would work on some level ideas including scenes, traps, story details, etc. 
+
+
+
+Player Controller
+{: .task time="2h"}
+I decided to make the Player controller for a 3D scene. While the game itself would be 2D isometric with 2D assets, I intended to have the scene itself be 3D with an orthographic camera using materials and shaders which create a more typical 2D look. My thinking is this would allow for more complex rendering techniques and scene layouts without needing to worry about as many layering conflicts that are often a prevalent issue when working on isometric 2D games. The controller itself uses a basic WASD input for horizontal movement and allows stepping up/down small enough steps for vertical movement.
+
+<img src="{{site.baseurl}}/assets/F25/post-1/Images/TestScene.png" />
+Image of basic testing scene using sample assets.
+{: .caption }
+
+The script uses the Input system to manage input and uses raycasts for determining step height. As for controlling the player sprite based on the user input I used a relatively new feature to Unity called a Sprite Resolver. The Sprite Resolver in short assigns a sprite to a Sprite Renderer using a Category and a Label. The category can be assigned as Standing, Walking-1, Walking-2, for different stages and the Label can be used for whatever direction the player is facing. 
+
+<img src="{{site.baseurl}}/assets/F25/post-1/Images/SpriteLibrary.png" />
+Image of Sprite Library used by the Sprite Resolver.
+{: .caption }
+<div class="code" href="{{site.baseurl}}/assets/F25/post-1/Scripts/PlayerController.cs"></div>
+
+
+
+Dithering
+{: .task time="3h"}
+For an isometric view its important that the player can see themselves when behind a wall. I decided to work on a dithering effect for then the player is behind a wall so that I could work on this and the custom materials for the 2D look at the same time. For the dithering effect itself I used a function called InterleavedGradientNoise within Unity's shader library as well as the HLSL clip() method rather than just transparency so that the dithering effect would apply to opaque objects as well.
+
+<div class="code" href="{{site.baseurl}}/assets/F25/post-1/Scripts/Dithering.hlsl"></div>
+
+For the rest of the material I used ShaderGraph, applying this function using a custom function node. The material uses a simple Tri-planar mapping so that materials can be easily tiled across rectangles without any need for any UV mapping or 3D modelling. 
+
+<img src="{{site.baseurl}}/assets/F25/post-1/Images/Dithering.png" />
+Wall being dithered in from of player. 
+{: .caption }
+
+
+
+Meeting #3
+{: .task time="1.5h"}
+Only two of our four R&D members could be present for this meeting, so Vida and I just went through our progress and what we had done. I answered some of her questions about how to approach art and sprite design given the mixed 3D/2D layout. To make it so that sprites could be effortlessly placed within a scene I crated a script that made it easy for sprites to be arranged in a way that layers correctly and stretches appropriately for the diagonal camera view.
+
+<div class="code" href="{{site.baseurl}}/assets/F25/post-1/Scripts/SpritePlacement.cs"></div>
+
+
+
+R&D Meeting (10/3/24)
+{: .task time="1h"}
+We held a meeting this week mostly to account for several people missing the previous studio meeting. We went over our current progress and discussed the presentation we'd be giving regarding out project in the next meeting. The plan was to have each person create and present their respective content that they've worked on. Other details about the following week's tasks/goals would be discussed at the nest meeting.
