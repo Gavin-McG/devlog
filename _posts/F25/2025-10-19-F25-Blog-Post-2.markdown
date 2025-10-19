@@ -1,0 +1,60 @@
+---
+layout: default
+title: F25 Blog Post 2
+date: 2025-10-19
+permalink: /F25/post-2/
+---
+
+Meeting #4
+{: .task time="1h"}
+I couldn't stay for much of this meeting so it ended up being fairly short for me. Must of the time was spent reviewing our progress and
+prioritizing what tasks and features should be completed first. For art the priority was establishing character design and getting some assets for a basic stage that could eventually be used for complete level testing later on. I decided that I will be working on the interactions/task systems.
+
+
+
+Task System Graph 
+{: .task time="5h"}
+Beginning with the task system I decided to create a graph editor for designing the task structure and requirements. The overall design is
+separated between Tasks and their respective requirements. To design the Graph tool itself I used Unity's fairly new and experimental Graph Toolkit. I'd used the graph toolkit before is developing the Dialogue System that is now included within the Studio's systems library. 
+
+Using the graph itself only requires creating a BeginTaskNode to represent the starting point, then connecting TaskNodes together to fit their intended dependencies. Each TaskNode can also have an arbitrary number of Requirements added Inside of it. Requirements themselves exist as ScriptableObjects created outside of the graph so that they can easily be referenced and marked as completed by other scripts. Each TaskNode also has a "Require Previous" bool option for whether it should requires all tasks before it to be completed before it's shown.
+
+If I had more time to work on this Something I would have liked to look into would with using other nodes to establish groups of tasks and creating more complex relationships. Currently the connection between which tasks lead to other tasks and whether a task requires all or one previous task completed are the only aspects that can be controlled. Something like a "RequireTaskCount" node could hypothetically be implemented to require at least a number of connected tasks to be completed before continuing. Perhaps if I ever decide to develop this system further to include it within the system library then this is something I would look into working on.
+
+Something less related to this graph tool in particular, but was nonetheless discovered while working on this tool is that the GTK supports custom property drawers for option displays. I had assumed as the Node inspectors were completely differently designed from the ordinary inspector that this system wouldn't overlap, but it seems that was wrong. One current annoyance for the graph tools I've made so far with this system is that strings only are one line which makes longer text harder to see and edit. The dev team of the GTK system have expressed intent to add support for multiline text UI, but have yet to do so in the months since. Rather than waiting for them to implement this feature, I eventually intend to create a container class for text for which I can define a custom property drawer and go back to replace the ordinary text fields with the container class.
+
+<img src="{{site.baseurl}}/assets/F25/post-2/Images/TaskGraph.png" />
+Image of the Task Graph being used for basic testing.
+{: .caption }
+
+
+
+Task Manager
+{: .task time="5h"}
+The Task Manager is a script that is intended to interpret the assets created by the Task System Graph at runtime. It provides an API for scripts to use to begin task systems, manually mark tasks as complete, check the state of any specific tasks, get the info of any or all active tasks, and provide events for listening for any changes to tasks or their requirements. The class itself is very large so I've split up its functionality into several files using partial classes. I'd considered using regions instead, but in previous experiences doing so I often end up just leaving regions open anyways and not getting much out of them. The script below shows only the main API:
+
+<div class="code" href="{{site.baseurl}}/assets/F25/post-2/Scripts/TaskManager.cs"></div>
+
+The class itself makes very heavy use of events and thus has very careful handling of listeners to make sure that none exist beyond their intended lifetime. The main reason for this design choice is that I wanted scripts to be able to interact with the specific tasks and requirements themselves rather than using the taskManager as a middle-man. For this reason the tasks need to listen for the completion event of the requirements, the manager needs to listen for when all the requirements of a task is completed, and all of these events need to be relayed to the TaskManager's outward facing events.
+
+
+
+Task System UI
+{: .task time="3h"}
+While we haven't fully decided whether we want a UI for the tasks or if we'd prefer user to have to learn and remember their objectives, having one will still be useful regardless for testing purposes. The Events in the TaskManager's API were originally designed with creating a UI in mind, so that the UI would only have to listen for certain events for specific changes, rather than constantly parsing through the entire TaskManager's info to detect changes. The design of the UI that I decided to have is a sort of bulleted list where the requirement descriptions are listed as a sub-list under each task.
+
+The first thing I did was create the sprite designs for the bullets themselves and, once again, make use of the Sprite Library for later UI implementation. One problem I encountered when creating the UI Layout itself is that Unity's Layout Groups and Content Fitters don't provide much consideration for nested groups/lists as I wanted to have. From what I found the parent Content Fitter cannot reflect size changes made by child Layout Groups. For this I had to design a workaround where only the parent Content fitter would be used and for the size of child elements I would control within the UI implementation. 
+
+<img src="{{site.baseurl}}/assets/F25/post-2/Images/TaskUI.png" />
+Image of Task UI design.
+{: .caption }
+
+For the UI implementation I split the logic into the TaskUIManager, the TaskUI, and the RequirementUI. The UIManager keeps track of its tasksUI's and the TaskUI's keep track of their respective RequirementUI's. This was the TaskManagerUI can listen for task changes from the TaskManager and just pass them down the line for the UI elements to make their correct respective changes. Also, With the setup of the Layout Groups the TaskManagerUI itself doesn't need to do any work for arranging anything.
+
+While the UI is mostly complete there are still several things that will be completed in later Weeks. I currently use a Rect 2D mask on each task, but I'd like to use this to shrink and grow the mask when tasks are removed or added respectively. Currently new tasks are added at the end of the list in the UI; I'd like to change this so that the next task seems to replace a completed task in the same spot in the list.
+
+
+
+Testing
+{: .task time="1h"}
+Work done for testing has been fairly minimal thus far. I intend to do more involved testing once I fully complete the work on the UI of the task system. For now what I have is a simple script for manually starting a task and manually completing a requirement via a button presses. As simplistic as this is, it is enough to confirm that the events are functioning properly, new tasks are being queued up properly, and the UI updates its content properly. There were also several bugs I encountered as a result including the TaskSystem not properly storing its initial tasks, certain lists not being initialized on start, and the TaskUI not setting its height properly on creation.
