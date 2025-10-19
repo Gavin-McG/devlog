@@ -45,7 +45,7 @@ While we haven't fully decided whether we want a UI for the tasks or if we'd pre
 
 The first thing I did was create the sprite designs for the bullets themselves and, once again, make use of the Sprite Library for later UI implementation. One problem I encountered when creating the UI Layout itself is that Unity's Layout Groups and Content Fitters don't provide much consideration for nested groups/lists as I wanted to have. From what I found the parent Content Fitter cannot reflect size changes made by child Layout Groups. For this I had to design a workaround where only the parent Content fitter would be used and for the size of child elements I would control within the UI implementation. 
 
-<img src="{{site.baseurl}}/assets/F25/post-2/Images/TaskUI.png" />
+<img src="{{site.baseurl}}/assets/F25/post-2/Images/TasksUI.png" />
 Image of Task UI design.
 {: .caption }
 
