@@ -1,0 +1,71 @@
+---
+layout: default
+title: F25 Blog Post 3
+date: 2025-11-02
+permalink: /F25/post-3/
+---
+
+Meeting #6
+{: .task time="2h"}
+Beyond the normal updates and review of everyone's work, I spent much of the meeting working on some of the quirks and issues with the Task Manager and Task System that I spent most of the previous two weeks working on. I worked on making sure the task automatically was removed from the UI after a slight delay one it was completed. 
+
+
+Clipping Issues
+{: .task time="2h"}
+A bug I thought that I had previously dealt with was getting transparent object to layer correctly in the scene. My main concern then was getting sprites that are in front of another to be layered on top. My solution, given the game being locked in a single orthographic view, was to set a sorting axis that aggressively favored the z-axis. This worked well for layering of sprites that were nearby, but it failed for areas of ground underneath the player.
+
+<img src="{{site.baseurl}}/assets/F25/post-3/Images/LayeringIssue.png" />
+Image of the player being rendered underneath a platform.
+{: .caption }
+
+Large transparent objects on the ground are always going to be a bit problematic when it comes to Unity's method of rendering. That's why the way that I chose to fix this was to have the platforms not be transparent at all. By keeping them as Opaque materials the depth sorting of them will still be exact. In order to preserve the ability to have seemingly transparent platforms I added a clipping node for the alpha value within the material's shaderGraph using a custom script. The only limitation to this approach is that now a platform has to be either completely opaque or completely see-through on any given part of it's surface. Overall I think that this is preferable to having to worry about layering issues.
+
+<div class="code" href="{{site.baseurl}}/assets/F25/post-3/Scripts/AlphaClip.hlsl"></div>
+
+
+
+R&D Meeting
+{: .task time="1h"}
+We once again were to prepare a slide presentation for the upcoming meeting. I focused my portion on the presentation on my Task System and the convenience it can provide for streamlining development of complex and highly dependency-based scene interactions. I was able to finish my portion fairly quickly so some time was also spent for a mid-week review and discussion of out progress.
+
+
+
+Meeting #7
+{: .task time="1h"}
+This was another short meeting for me. The meeting started off with the R&D teams presenting our progress on our respective projects. I didn't stay much beyond the required announcements and team check-ins as I was participating in a WolverineSoft Gamejam over the weekend.
+
+
+
+Dialogue System
+{: .task time="3h"}
+I wanted to get the integration of the dialogue system out of the way. Fortunately the Dialogue System I had previously developed for the Studio's Systems Library meant I didn't need to spend days developing my own, I only had to download the package into the project. Beyond this I made some modifications to the Default layout of the UI, changing the scale and proportions of the text and Profile image to better match the character references tht Vida, out artist, had produced. I also created a draft Dialogue Graph for the first level of the game.
+
+<img src="{{site.baseurl}}/assets/F25/post-3/Images/DialogueGraph.png" />
+Dialogue graph for the first interaction with "Gou Ingtodie".
+{: .caption }
+
+Next to do was to allow the dialogue to be triggered within the scene. Part of the new EECS 298 course that I'm an IA for features a testbed for a 3D platformer. I decided I wanted to have my system for handling interactions be similar to what Austin Yarger had implemented for this test bed, where one component is responsible for receiving an interaction and others receive a relay from that component to trigger more specific responses. I also had to create a component for the player in order to keep track of which objects were queued to being interacted with.
+
+<div class="code" href="{{site.baseurl}}/assets/F25/post-3/Scripts/PlayerInteract.cs"></div>
+
+
+
+Task-Dialogue Integration
+{: .task time="2.5h"}
+It’s going to be really important that the Task and Dialogue systems can communicate with each other. specifically, I need it to be so certain dialogue interactions can fulfill the requirements of a given task. Fortunately, my dialogue system already supports defining custom event types that can be triggered within a dialogue interaction.
+
+Since this is my first time actually using the dialogue system in a real project, I ran into a few snags. The biggest issue was how the EventNode displays the value being passed into an event call. The Graph Toolkit that the system was built with doesn’t support custom types the way the Unity Inspector does, so I had built my own reflection-based system to recursively display supported fields of complex classes.
+
+That approach caused a problem when the ScriptableObject for a Requirement was being displayed—it tried to prompt for the fields of the Requirement rather than the Requirement itself, essentially trying to create a new RequirementSO instead of using an existing one. When I get around to it, I’d like to fix this by adding a boolean option to let an EventNode decide whether to create a new ScriptableObject or reference an existing one.
+
+In the meantime, I was able to use a sort of "duct-tape" solution to this issue by created a container class for the RequirementSO and use this type for the event rather than use the RequirementSO type directly. After that the only thing was to create a basic component which would receive this event and mark the Requirement as complete for whatever events are received.
+
+<div class="code" href="{{site.baseurl}}/assets/F25/post-3/Scripts/RequirementEventReceiver.cs"></div>
+
+
+
+Beginning Level Layout
+{: .task time="1h"}
+The last of the work I did this cycle was using some of the art assets that had been created to begin work on creating the scene for this first level. In particular I created the stage for the concert venue that is to the the setting of the first level.
+
+<img src="{{site.baseurl}}/assets/F25/post-3/Images/LevelStage.png" />
