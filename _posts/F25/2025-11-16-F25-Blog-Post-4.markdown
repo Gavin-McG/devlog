@@ -1,0 +1,68 @@
+---
+layout: default
+title: F25 Blog Post 4
+date: 2025-11-16
+permalink: /F25/post-4/
+---
+
+Meeting #7
+{: .task time="2h"}
+Most of this meeting was used as a general work period. I spent most of it working out some kinks with the interaction system. Specifically, I wanted to mke sure that a given interaction call only triggered a single nearby object. While it would've been easy to have the player only interact with whichever object it got near/registered first, It made more sense to have it be determined by distance , only triggering whichever object was closest.
+
+
+
+R&D Meeting
+{: .task time="1h"}
+We spent this meeting putting together out slides for the progress we'd made in the previous 2 weeks at the following meeting. My content focused on my implementation of the dialogue system. While many of the details/capabilities of the dialogue system were not created within the scope of this project per-say, I figured I would describe its features and capabilities as well as to encourage its use in future projects as part of the systems library that I helped establish.
+
+
+
+Meeting #8
+{: .task time="1.5h"}
+I didn't have much time to work on the project itself the previous week, so there wasn't much beyond out team's presentation and general updates for me. This is also why it ended up being a shorter meeting than usual.
+
+
+
+Interaction Indicators
+{: .task time="1.5h"}
+Another reason that I modified the interaction system to isolate the closest object in for displaying interaction indicators. I made it so that each interactable object could have an indicator display once it is within range of the player. The idea is so that objects can have indicators that represent the action that would be taking place, so that the player can get some idea of what it is that their interaction will do.
+
+Given that out artist was busy creating walk cycles for different characters I figured it'd be easier to just take it upon myself to draw the indicators myself, as they only needed to be small 16x16 sprites. I ended up making 9 different indictors in total: 4 for stairs (up/down & left/right), 2 for doors, 1 for dialogue, 1 for repairing, and 1 as a general purpose indicator. Implementing them meant giving each interactable object its own sprite which the player will fetch to display when objects are nearby.
+
+<img src="{{site.baseurl}}/assets/F25/post-4/Images/Indicator.png" />
+
+
+
+Doors
+{: .task time="1h"}
+Doors make use of the previously established interaction system. I created a dialogue response for moving a given object to another given object's location. For doors, this just means teleporting the player to the location of the connecting door. I also wanted to have the ability to have locked doors. Rather than implement any custom feature for this, I figured itd be easiest to just have a fake door which can be swapped out with the real door once it can be unlocked. In order to have the locked state of the door be indicated to the player I just gave the locked door a simple dialogue response in place of its usual moving response. Making this look good took some modification of the existing Dialogue UI as to make the profile image and name text be hidden when the provided dialogue profile has neither.
+
+<div class="code" href="{{site.baseurl}}/assets/F25/post-4/Scripts/TeleportObjectResponse.cs"></div>
+
+
+
+CatWalk + More Level Setup
+{: .task time="2h"}
+Working to get the scene closer to what we want out of the tutorial level I worked on the catwalk and room leading up to it that would be part of the level requirements. The idea is that the player will have to get up to the catwalk to repair a stage light that has been sabotaged to prevent it from falling on their client. Given the orthographic view our game has, The catwalk in its intended position would always be visible to the player, which is not ideal. Instead, I made it so that the catwalk is activated and deactivated by the interactions with the door leading up to it using a new interaction response.
+
+<img src="{{site.baseurl}}/assets/F25/post-4/Images/Catwalk.png" />
+
+One problem I ran into is that the trigger colliders being enabled/disabled could interfere with the player receiving OnTriggerEnter/OnTriggerExit calls from the doors. My solution for this was to have the catwalk's enabled state be controlled by the doors leading up to the catwalk rather than the doors to the catwalk themselves. That way, the doors that are enabled and disabled are not near the player when this occurs. Perhaps a more rigorous solution might be required later, but ths works for now.
+
+
+
+PlayTest
+{: .task time="2h"}
+While not directly part of the Production team working on Project Witch, I figured I'd participate so that the playtest can get more outside eye. I played thoroughly through the game in its current state and made detailed notes and screenshots of any bugs/issues that I can upon. I also looked through the output logs to attach screenshots of any error message that were likely related to specific bugs as to assist the team in their efforts to resolve them.
+
+<img src="{{site.baseurl}}/assets/F25/post-4/Images/Playtest.png" />
+
+
+
+Property Drawer Research
+{: .task time="2h"}
+I mentioned within a previous post that I discovered that Unity's Graph Toolkit supports property drawers for nodes' options and ports when using the UI Toolkit API, and expressed by intent on improving the Dialogue System of the Studio's systems library using this fact. I spent some time looking more into the capabilities of this and learning how it works. I am completely unfamiliar with the UI Toolkit as a whole, thus I was also inexperienced with the API for establishing property drawers. Fortunately, it ended up being more intuitive than the older EditorGUI system.
+
+The only problem that I ran into in that it seems the nodes within the Graph Toolkit only consider the width of the base element. The UI toolkit has a very HTML-like structure/styling capabilities, so I assumed increasing the width of a parent element would also force the parent element to be larger as well, but this ws not the case.
+
+The change I'd most like to make in implementing this feature into the Dialogue system is to remove the need for any user defined Editor scripts when a developer is integrating the system. Currently, If a developer is looking to have custom parameters for their dialogue, they need both a custom class and a custom node to hold that class. With Property Drawers, however, I could instead use a combination of attributes and reflection to allow for users to choose what parameter types they want to use within a single node type.
