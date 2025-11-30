@@ -1,0 +1,41 @@
+---
+layout: default
+title: F25 Blog Post 5
+date: 2025-11-30
+permalink: /F25/post-5/
+---
+
+Meeting #9 + #10
+{: .task time="2h"}
+Much of the time of these meetings was spent much like other meetings with showcasing our progress. We also did some work preparing and planning for the drafts for the design documents which were due on 11/30. Much of what I wanted to focus on going forward were the finishing touches to get the game inti a "playable" state given we were so close to the deadline. This included necessary player guidance, design for what UI we would need, and integrating the Rhythm mechanics into the game.
+
+Scene Details
+{: .task time="2h"}
+Vida, our teams artist, had recently finished a few of the important sprites to be placed in the scene, including the carpet and chairs. The carpet was a necessary addition because it the doors leading to the side rooms could previously only be observed by the interaction icon when nearby. Using the carpets to show the path leading off to the door was a convenient way of showing that it's there, which can otherwise be difficult with the orthographic angle to chose.
+
+<img src="{{site.baseurl}}/assets/F25/post-5/Images/Carpet.png" />
+Carpet leading off into the side door.
+{: .caption }
+
+Implementing the chairs placing them in an orderly fashion. In adding them to the scene I tried to be efficient with the placement of colliders, with the straight rows of chairs only requiring one collider rather than each chair having its own. It was also good to see that the sprite layering precautions were working effectively, as the player was properly rendered between the rows of chairs.
+
+Rhythm System Integration
+{: .task time="2h"}
+Ethan, the other programmer on our team, had finished the changes to make the Rhythm system easier to integrate. Specifically, he finished the API that made it easy to start a new mini-game with specific song data and listen for the ending of a game. What I started by doing was bringing the content of the mini-game into the main scene. The content of the game itself was using regular GameObjects rather than UI elements, so I had it use Camera Stacking. Camera Stacking is Unity URP's method of using a camera to render an overlay to the main camera. It's a feature I hadn't previously used, but it was fairly easy to get it working and ensure that each camera only rendered their respective objects.
+
+As for the main script for the mini-game itself, there were some small changes I elected to make. Previously it had been made using a PlayerInput component with its own Input Asset. I decided to have it just use InputActionReferences and move the actions over to the main Input Asset. I also made several other changes just to clean up the code and Inspector window.
+
+<div class="code" href="{{site.baseurl}}/assets/F25/post-5/Scripts/RhythmGameManager.cs"></div>
+
+The last part of Integrating this system was to add an InteractionResponse so that a game could be begun through a Player interaction. I decided to have the script relay the end_song event to its own event so that a given script could be made to listen to the ending of a particular mini-game if we ever want to include multiple within a single level.
+
+<div class="code" href="{{site.baseurl}}/assets/F25/post-5/Scripts/StartRhythmGameResponse.cs"></div>
+
+
+Design Documents
+{: .task time="1.5h"}
+To end off the week I finished up the drafts for what I had to complete of our Design documents. Fortunately my teammates were on top of creating the Art and Decisions documents and I'd put them off longer than I meant to. That left me with creating the programming and audio documents. For programming I mostly wrote some general details about the core systems of our project and their purpose. I also chose to mention the general file layout we'd been using and went over some general good programming practice standards. The Audio document was a bit further from my range of expertise, by I attempted to be as detailed as I could in terms of what would be needed, what sort of music/effects would best serve the project, and how it should affect the feeling of the user's experience.
+
+<img src="{{site.baseurl}}/assets/F25/post-5/Images/Deliverables.png" />
+Screenshot from the Programming Design Document Draft.
+{: .caption }
