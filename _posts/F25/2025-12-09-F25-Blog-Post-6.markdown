@@ -1,0 +1,44 @@
+---
+layout: default
+title: F25 Blog Post 6
+date: 2025-12-09
+permalink: /F25/post-6/
+---
+
+Complete Level
+{: .task time="3h"}
+Leading up to the showcase we needed our demo level to be in a fully playable state. Much of the time spent on this was in a work session during meeting #11. This included finishing adding plants, a Janitor NPC, finishing the room layout, and a collectible item from the plant to be traded with the janitor for a door key. Much of this work was done using the systems established previously, primarily the interaction and dialogue system. In fact, in doing this I required almost no custom scripts, which was one of the goals in focusing so much on establishing rigorous system foundation earlier in the semester.
+
+<img src="{{site.baseurl}}/assets/F25/post-6/Images/PlantGraph.png" />
+Dialogue Graph used for the plant with a collectible item.
+{: .caption }
+
+Main Menu 
+{: .task time="0.5h"}
+We didn't decide to put much attention into the main menu for this cycle. While it might have been nice to have an impressive menu page for the showcase to lure in more people, getting the necessities into the game took priority. The final main menu consisted of a simple Title, a "Play" button, and a "Quit" button. 
+
+Intro Scene
+{: .task time="0.5h"}
+The intro scene features the player receiving a call from their boss informing them of their next assignment, and serving as an intro to the player as to the premise of the game. Once again, most of this work could be easily accomplished using the dialogue system, with some scripting needed to manage the changing between scenes once the dialogue concludes.
+
+Ending Scene
+{: .task time="2h"}
+The ending scene comes in two parts. The first is a short sequence where client either is hit by a falling stage light or completes his speech depending on the player's performance in the level. The second is another call from the boss, with the dialogue also depending on the outcome. While the second section was very similar to the intro scene, some extra work was required for the stage light logic and evaluating the user performance. Once that was finished we had the demo level feature-complete
+
+Showcase
+{: .task time="3h"}
+The other R&D group didn't have a ready build for the showcase so we had two stations to present out project. There were several issues that were encountered during the showcase: People weren't noticing the plants were interactable without being told, the game would break on a second play-through, and there was no way to exit to the main menu without closing and re-opening the game. I made some quick fixes mid-showcase to resolve these issues. For the plant, I added a faintly visible particle indicator on the plant with the hidden item. This made it so that many more people were able to properly find the item without additional guidance.
+
+<img src="{{site.baseurl}}/assets/F25/post-6/Images/PlantSparkle.png" />
+Dialogue Graph used for the plant with a collectible item.
+{: .caption }
+
+The issue with the game breaking on a second play-through was caused by Dialogue System values being preserved between scene changes. I hadn't originally intended this, but because the values are saved in ScriptableObjects they were not reset on scene loads. To fix this I made it so that all the Dialogue Values have their values reset once the level scene loads. The dialogue system package didn't originally support this functionality, but I made a temporary edit to add Reset functionality that I will have to add to the package itself later. The values themselves are reset to null rather than their default values, but this didn't cause any issues for my uses.
+
+<div class="code" href="{{site.baseurl}}/assets/F25/post-6/Scripts/ResetHolder.cs"></div>
+
+Dialogue System Reflection
+{: .task time="0h"}
+One thing I've realized when working with my dialogue system is that the value system, while at times useful, can cause more issues than anything. Other than the previously described issue of the values inconveniently persisting, it has also adds a lot of asset bloat, has a confusing scope system, and an arbitrary choice of supported types by default. In the future I think it would be best to remove the current value system entirely and have the events be the primary source of creating dynamic dialogue interactions. This would allow developers to create more application-specific implementations rather than relying on a feature that may not be ideal for their use-case.
+
+I would still like to include some means of providing values to dialogue for the purpose of replacing bracketed text like what can currently be done (i.e. {name} -> "Gavin"). I'd like to change this to use a system more similar to Unity's animator, where parameters are defined specific to each Graph rather than as assets. This would make it much easier to provide an API through the Dialogue Manager that gives developers control over these values with a much more intuitive scope.
